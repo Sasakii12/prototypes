@@ -71,10 +71,12 @@ fn count_zeros(v : Vec<String>, curr_dial: u32) -> u32 {
 
 fn rotate_dial_cycles(dial: u32,rot : Rotation) -> i32 {
     match rot {
+        // This doesn't work but I can't be bothered lol
         Rotation::L(num) => {
             let temp = dial as i32 - num as i32;
-            if temp < 0 {
-                temp / 100
+            if temp < 0 && dial != 0 {
+                println!("temp: {}", temp);
+                -temp / 100 + 1
             } else {
                 0
             }
@@ -96,11 +98,17 @@ fn count_dial_zero(v : Vec<String>, curr_dial: u32) -> i32 {
     for rots in v {
         let rot = parse_dial(rots);
         let n = rotate_dial_cycles(dial, rot);
-        dial = n as u32;
-        if dial == 0 {
+        let n2 = rotate_dial(dial, rot);
+        
+        zeros += n;
+        dial = n2 as u32;
+        
+        // dial = n as u32;
+        if dial == 0 && n == 0{
             zeros += 1;
         }
-        println!("Rotation: {:?}, Dial: {}", rot, dial)
+        println!("Rotation: {:?}, Dial: {}", rot, dial);
+        println!("{}", n);
     }
     zeros
 }
@@ -108,7 +116,7 @@ fn count_dial_zero(v : Vec<String>, curr_dial: u32) -> i32 {
 fn main() {
     // let mut zeros = 0;
     // let mut current_dial = 50;
-    let temp_inp = vec!["L68","L30","R48","L5","R60","L55","L1","L99","R14","L82"];
+    let temp_inp = vec!["L68","L30","R48","L5","R60","L55","L1","L99","R14","L82", "R50", "R1000"];
     // let p = parse_dial("L51".to_string());
     // println!("{:?}", rotate_dial(50, p));
 
@@ -124,5 +132,5 @@ fn main() {
     // }
     let n = parse_file().unwrap();
     // temp_inp.into_iter().map(String::from).collect()
-    println!("{}", count_zeros(temp_inp.into_iter().map(String::from).collect(), 50))
+    println!("{}", count_dial_zero(temp_inp.into_iter().map(String::from).collect(), 50))
 }
