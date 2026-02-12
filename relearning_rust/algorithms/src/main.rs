@@ -11,4 +11,6 @@ fn main() {
     println!("{:?}", sort_vec );
     selectionsort::selection_sort(&mut sort_vec);
     println!("{:?}", sort_vec );
+    insertionsort::insertionsort(&mut sort_vec);
+    println!("{:?}", sort_vec );
 }
