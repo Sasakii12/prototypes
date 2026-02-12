@@ -1,12 +1,14 @@
 mod algo;
 
-use crate::algo::bubblesort::{bubblesort, bubblesort_rev};
+use crate::algo::*;
 
 fn main() {
-    let mut sort_vec = vec![1,6,2,8,2,1];
+    let mut sort_vec = vec![7,12,9,11,3];
     println!("Hello, world!");
-    bubblesort(&mut sort_vec);
+    bubblesort::bubblesort(&mut sort_vec);
     println!("{:?}", sort_vec );
-    bubblesort_rev(&mut sort_vec);
+    bubblesort::bubblesort_rev(&mut sort_vec);
+    println!("{:?}", sort_vec );
+    selectionsort::selection_sort(&mut sort_vec);
     println!("{:?}", sort_vec );
 }
