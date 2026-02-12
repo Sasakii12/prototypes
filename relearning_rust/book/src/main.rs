@@ -1,5 +1,5 @@
 use std::fs::File;
-use std::io::ErrorKind;
+use std::io::{self, BufRead, BufReader, ErrorKind};
 
 
 fn open_file() {
@@ -14,11 +14,24 @@ fn open_file() {
     });
 }
 
+fn read_file() -> Result<String, io::Error> {
+    let file = File::open("input.txt")?;
+    let mut str = String::new();
+    let buf_reader = BufReader::new(file);
+
+    for i in buf_reader.lines() {
+        str.push_str(&i.unwrap());
+        str.push(' ');
+    }
+
+    Ok(str)
+}
+
 fn main() {
     let mut v = vec![100,32,57];
     for i in &mut v {
         *i += 1;        
         println!("{}", i)
-    }
-    open_file();
+    };
+    println!("{}",read_file().unwrap())
 }
