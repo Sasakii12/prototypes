@@ -5,4 +5,5 @@ edition = "2024"
 
 [dependencies]
 http = "1.4.0"
+reqwest = "0.13.2"
 serde = "1.0.228"
