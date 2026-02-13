@@ -1,13 +1,17 @@
-use http::{Request, Response};
+use reqwest::{get, Error};
+use http::Response;
 
-
-
-fn send(req: Request<()>) -> http::Result<Response<()>> {
-    
+#[tokio::main]
+async fn main() {
+    let url = "https://pokeapi.co/api/v2/pokemon/ditto";
+    let pokemon = "Pikachu";
+    println!("{}", get_pokemon(pokemon).await.unwrap());
 }
 
-fn main() {
-    let mut request = Request::builder().uri("https://pokeapi.co/api/v2/pokemon/ditto");
-    println!("Hello, world!");
-}
 
+async fn get_pokemon(pokemon: &str) -> Result<String, Error> {
+    let url = "https://pokeapi.co/api/v2/pokemon/";
+    let body = reqwest::get(url)
+    .await?.text().await?;
+    Ok(body)
+}
