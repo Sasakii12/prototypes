@@ -1,4 +1,5 @@
 use std::io;
+use clap::Parser;
 
 use reqwest::{Error};
 use serde::{Deserialize, Serialize};
@@ -25,11 +26,11 @@ async fn main() {
     // let pokemon = "Pikachu";
     // let js: Value = serde_json::from_str(get_pokemon(pokemon).await.unwrap().as_str()).unwrap();
     // println!("{:?}", js);
-    println!("Please enter a pokemon name");
-    let name = input();
-    let poke_str = get_pokemon(&name).await.unwrap();
-    let poke_json: Value = serde_json::from_str(&poke_str).unwrap();
-    let prim_type = &poke_json["types"][0]["type"]["name"];
-    println!("Your pokemon is an {} type", prim_type);
+    // println!("Please enter a pokemon name");
+    // let name = input();
+    // let poke_str = get_pokemon(&name).await.unwrap();
+    // let poke_json: Value = serde_json::from_str(&poke_str).unwrap();
+    // let prim_type = &poke_json["types"][0]["type"]["name"];
+    // println!("Your pokemon is an {} type", prim_type);
 }
 
