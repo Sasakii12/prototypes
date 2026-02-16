@@ -1,11 +1,13 @@
-use reqwest::{get, Error};
-use http::Response;
+use reqwest::{Error};
+use serde::{Deserialize, Serialize};
+use serde_json::{Value, from_str};
 
 #[tokio::main]
 async fn main() {
     let url = "https://pokeapi.co/api/v2/pokemon/ditto";
     let pokemon = "Pikachu";
-    println!("{}", get_pokemon(pokemon).await.unwrap());
+    let js: Value = serde_json::from_str(get_pokemon(pokemon).await.unwrap().as_str()).unwrap();
+    println!("{:?}", js);
 }
 
 
