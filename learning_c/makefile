@@ -10,5 +10,8 @@ all:	main
 main:	main.c
 	$(CC)	$(CFLAGS)	-o	main.out	main.c
 
+shoppingcart:	projects/shoppingcart.c
+	$(CC)	$(CFLAGS)	-o	projects/shoppingcart.out	projects/shoppingcart.c
+
 clean veryclean:
 	$(RM)	Hello
