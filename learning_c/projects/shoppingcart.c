@@ -16,6 +16,6 @@ int main() {
     printf("How many would you like?: ");
     scanf(" %d", &pizza_amt);
 
-    printf("You have bought %d %s\n", pizza_amt, item);
+    printf("You have bought %d %s/s\n", pizza_amt, item);
     printf("The total is: $%.2f\n", price * (float)pizza_amt);
 }
