@@ -13,5 +13,8 @@ main:	main.c
 shoppingcart:	projects/shoppingcart.c
 	$(CC)	$(CFLAGS)	-o	projects/shoppingcart.out	projects/shoppingcart.c
 
+pointers:	projects/pointers.c
+	$(CC)	$(CFLAGS)	-o	projects/pointers.out	projects/pointers.c	-lm
+
 clean veryclean:
 	$(RM)	Hello
