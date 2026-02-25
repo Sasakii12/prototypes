@@ -78,7 +78,7 @@ impl<'a> State<'a> {
         self.surface = self.instance.create_surface(self.window.render_context()).unwrap();
     }
 
-    fn render(&mut self) -> Result<(), wgpu::SurfaceError> {
+    fn render(&mut self, current_color: wgpu::Color) -> Result<(), wgpu::SurfaceError> {
         let drawable = self.surface.get_current_texture()?;
         let image_view_descriptor = wgpu::TextureViewDescriptor::default();
         let image_view = drawable.texture.create_view(&image_view_descriptor);
@@ -93,13 +93,7 @@ impl<'a> State<'a> {
             view: &image_view,
             resolve_target: None,
             ops: wgpu::Operations {
-                load: wgpu::LoadOp::Clear(wgpu::Color {
-                    r: 0.25,
-                    g: 0.0,
-                    b: 0.5,
-                    a: 0.0,
-
-                }),
+                load: wgpu::LoadOp::Clear(current_color),
                 store: wgpu::StoreOp::Store,
             },
             depth_slice: None,
@@ -152,6 +146,8 @@ async fn run() {
 
     let mut state = State::new(&mut window).await;
 
+    let mut current_color = wgpu::Color::RED;
+
     while !state.window.should_close() {
         glfw.poll_events();
         for (_, event) in glfw::flush_messages(&events) {
@@ -160,10 +156,22 @@ async fn run() {
                     state.window.set_should_close(true);
                 }
 
-                glfw::WindowEvent::FramebufferSize(width, height ) => {
-                    state.update_surface();
-                    state.resize((width,height));
+                glfw::WindowEvent::Key(Key::A, _,Action::Press ,_ ) => {
+                    current_color = wgpu::Color::BLUE
                 }
+
+                glfw::WindowEvent::Key(Key::C, _,Action::Press ,_ ) => {
+                    current_color = wgpu::Color::RED
+                }
+
+                glfw::WindowEvent::Key(Key::B, _,Action::Press ,_ ) => {
+                    current_color = wgpu::Color::BLACK
+                }
+
+                // glfw::WindowEvent::FramebufferSize(width, height ) => {
+                //     state.update_surface();
+                //     state.resize((width,height));
+                // }
 
                 glfw::WindowEvent::Pos(..) => {
                     state.update_surface();
@@ -175,7 +183,7 @@ async fn run() {
                 }
             }
         }
-        match state.render() {
+        match state.render(current_color) {
             Ok(_) => {},
             Err(wgpu::SurfaceError::Lost | wgpu:: SurfaceError::Outdated) => {
                 state.update_surface();
