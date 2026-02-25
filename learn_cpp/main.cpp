@@ -1,6 +1,10 @@
 #include <cmath>
 #include <iomanip>
 #include <iostream>
+#include <sstream>
+#include <string>
+#include <vector>
+
 using namespace std;
 
 int factorial(int x);
@@ -25,9 +29,22 @@ int factorial(int x) {
     return x * factorial(x-1);
 }
 
+vector<string> split(string x, char delimiter) {
+    if (x.find(delimiter)) {
+        return {x.substr(0,x.find(delimiter))}
+    }
+    return split(string x, char delimiter)
+
+}
+
 int main() {
-    int x = 0;
-    cout << "Please enter a number\n";
-    cin >> x;
-    cout << "PI: " << setprecision(x) << pi(x);
+    // int x = 0;
+    // cout << "Please enter a number\n";
+    // cin >> x;
+    // cout << "PI: " << setprecision(x) << pi(x);
+
+    string test = "1 + 5";
+
+    stringstream ss(test);
+    string t = "";
 }
