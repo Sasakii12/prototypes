@@ -1,5 +1,6 @@
-#[derive(PartialEq, Copy, Clone)]
+#[derive(PartialEq, Copy, Clone, Default, Debug)]
 enum Pizzaria {
+    #[default]
     Stage,
     LeftHallway,
     RightHallway,
@@ -7,6 +8,7 @@ enum Pizzaria {
     AtRightDoor
 }
 
+#[derive(Default)]
 struct Animatronic {
     name: String,
     path: Vec<Pizzaria>,
@@ -29,7 +31,7 @@ impl Animatronic {
         self.location = self.path[location + 1]
     }
 
-    fn show_location(&mut self) -> Pizzaria {
+    fn show_location(&self) -> Pizzaria {
         self.location
     }
 }
@@ -89,9 +91,11 @@ fn input() -> String {
 }
 
 
-fn check_cam() {
+fn check_cam(anim: &Vec<Animatronic>) {
+    let locations = anim.iter().map(|x| (x.name.clone(),x.show_location())).collect::<Vec<(String, Pizzaria)>>();
     println!("Which cam would you like to view?");
-    println!("[1] Stage")
+    println!("[1] Stage");
+    println!("{:?}", locations)
 }
 
 fn toggle_doors(office: &mut Office) {
@@ -104,18 +108,17 @@ fn toggle_doors(office: &mut Office) {
     }
 }
 
-fn game_loop() {
+pub fn game_loop() {
     let anim = initialize();
     let mut office = Office {left: false, right: false};
     loop {
         println!("What would you like to do?");
-        println!("[1] Check cams\n
-                  [2] Toggle doors");
+        println!("[1] Check cams\n[2] Toggle doors");
         let action = input();
         match action.as_str() {
-            "1" => check_cam(),
+            "1" => check_cam(&anim),
             "2" => toggle_doors(&mut office),
-            _ => todo!()
+            _ => continue
         }
     }
     
