@@ -99,8 +99,8 @@ fn check_cam(anim: &Vec<Animatronic>) {
 }
 
 fn toggle_doors(office: &mut Office) {
+    println!("Which door would you like to toggle?\n[1] Left door\n[2] Right door");
     office.door_status();
-    println!("Which door would you like to toggle?\n [1] Left door\n[2] Right door");
     match input().as_str() {
         "1" => office.toggle_left_door(),
         "2" => office.toggle_right_door(),
