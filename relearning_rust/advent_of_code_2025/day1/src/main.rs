@@ -36,24 +36,39 @@ impl Dial {
     fn rotation_r(&mut self, num: u32) {
         let val = self.dial + num;
         let val_mod = val.rem_euclid(100);
+        let cycles = (val - val_mod) / 100;
+        println!("dial: {}, num: {}", self.dial, num);
+        println!("cycle: {}, val_mod: {}, val: {}", cycles, val_mod, val);
         if val_mod == 0 {
             self.clicks += 1;
             self.dial = 0;
+            // self.clicks += cycles;
         } else {
-            self.dial = val_mod
+            self.dial = val_mod;
+            self.clicks += cycles;
         }
+        println!("total clicks: {}", self.clicks)
         
     }
 
     fn rotation_l(&mut self, num: u32) {
         let val = self.dial as i32 - num as i32;
-        let val_mod = val.rem_euclid(100) as u32;
+        let val_mod = val.rem_euclid(100) as i32;
+        let cycles = ((val as i32 - val_mod) / 100).abs() as u32;
+        println!("dial: {}, num: {}", self.dial, num);
+        println!("cycle: {}, val_mod: {}, val: {}", cycles, val_mod, val);
         if val_mod == 0 {
             self.clicks += 1;
             self.dial = 0;
+            // self.clicks += cycles;
         } else {
-            self.dial = val_mod
+            if self.dial != 0 {
+                self. clicks += cycles;
+            }
+            self.dial = val_mod as u32;
+            
         }
+        println!("total clicks: {}", self.clicks)
     }
 }
 
@@ -75,8 +90,7 @@ fn main() {
     let temp_inp = vec!["L68","L30","R48","L5","R60","L55","L1","L99","R14","L82"];
     let puzzle_input = parse_file().unwrap();
     let mut dial = Dial {dial : 50, clicks : 0};
-    
-    for i in puzzle_input {
+    for i in temp_inp {
         let rot = dial.parse_rot(&i);
         dial.rotation(rot);
         
