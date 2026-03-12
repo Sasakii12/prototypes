@@ -22,10 +22,15 @@ fn parse_input_into_range(input: &str) -> Vec<(u64, u64)> {
 
 fn eval_ranges(input: Vec<(u64, u64)>) -> u64 {
     let mut sum = 0;
-    let re = Regex::new(r"^(\d+)\1$").unwrap();
+    // part 1 regex
+    // let re = Regex::new(r"^(\d+)\1$").unwrap();
+    
+    // part 2 regex
+    let re = Regex::new(r"^(\d+)\1+$").unwrap();
     for range in input {
         for i in range.0 .. range.1 + 1 {
             if re.is_match(i.to_string().as_str()).unwrap() {
+                println!("{}", i);
                 sum += i
             }
         }
@@ -39,12 +44,13 @@ fn main() {
     // let prod_ids = parse_file().unwrap();
     let ranges = parse_input_into_range(test_string);
     let file_inp = parse_file().unwrap();
-    println!("{}", file_inp);
+    // println!("{}", file_inp);
     let input_ranges = parse_input_into_range(&file_inp);
 
     // the compiler took 28 seconds to evaluate all of this LOL
-    println!("{}", eval_ranges(input_ranges))
+    println!("{}", eval_ranges(input_ranges));
     // println!("{:?}", eval_ranges(ranges.clone()));
     
-    // assert!(eval_ranges(ranges) == 1227775554)
+    // assert!(eval_ranges(ranges) == 4174379265)
+
 }
