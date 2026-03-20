@@ -20,17 +20,20 @@ fn read_input(file: &str) -> Result<Vec<String>> {
 
 fn find_max(arr: &Vec<u32>) -> HashMap<u32, u32>  {
     let mut arr_clone = arr.clone();
-    arr_clone.sort();
-    let mut n = Vec::new();
-    let mut hash: HashMap<u32, u32> = HashMap::new();
+    let m = arr_clone.iter().max().unwrap();
+    let index = arr_clone.iter().position(|x| x == m).unwrap();
+    let mut new_max = 0;
+    if index == 0 {
+        new_max =   arr_clone[1..arr_clone.len()].iter().max().unwrap().clone();
+    } else {
 
+        new_max =   arr_clone[index..arr_clone.len()].iter().max().unwrap().clone();
+    }
+    let mut hash = HashMap::new();
 
-    for _ in 0..2 {
-        n.push(arr_clone.pop().unwrap());
-    }
-    for i in n {
-        hash.insert(arr.iter().position(|r| *r == i).unwrap() as u32, i);
-    }
+    hash.insert(0, m.clone());
+    hash.insert(1, new_max.clone());
+
     hash
 }
 
