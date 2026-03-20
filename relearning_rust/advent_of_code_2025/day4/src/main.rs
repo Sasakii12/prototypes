@@ -29,14 +29,32 @@ fn find_adjacents(v: Vec<[char; 10]>) {
 
 
     for (index, row) in v.iter().enumerate() {
+        // inner vector
         for (index_of_row_elem, row_elem) in row.iter().enumerate() {
+            let mut rolls = 0;
             if *row_elem == '@' {
                 already_searched.push(index_of_row_elem);
+
+                // Check immediate left and right elements
+                if index_of_row_elem < row.len() && row[index_of_row_elem + 1] == '@'{
+                    rolls += 1;
+                } else if index_of_row_elem > 0 && row[index_of_row_elem - 1] == '@' {
+                    rolls += 1;
+                }
+
+
                 if index == 0 {
                     // only search the bottom not the top
                     let adj1 = get_nearby(v[index + 1].to_vec(), index_of_row_elem);
                     
-                }
+                } else if index == row.len() - 1 {
+                    // only search the top one if its the last elem
+                    let adj1 = get_nearby(v[index - 1].to_vec(), index_of_row_elem);
+                } else {
+                    // Search both of them
+                    let adj1 = get_nearby(v[index + 1].to_vec(), index_of_row_elem);
+                    let adj2 = get_nearby(v[index - 1].to_vec(), index_of_row_elem);
+                } 
             }
         }
     }
